@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example 1 for The WWW as a Rube Goldberg machine</title>
+    <style>
+        /* General body styling for a light background and some padding */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* Style for the trigger button to make it more engaging */
+        #initTrigger {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #initTrigger:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styling for each section to add some spacing and visual separation */
+        section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Styling for headers within each section for consistency */
+        section h3 {
+            color: #333333;
+            margin-top: 0;
+        }
+
+        /* Styling for the image from NASA to ensure it fits nicely within its section */
+        #NASAimage img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* Additional styling for paragraphs for better readability */
+        p {
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <button role="button" id="initTrigger">I am bored!!!</button>
+    <section id="activitySection"></section>
+    <section id="NASAimage"></section>
+    <h1>Today Weather</h1>
+    <section id="weatherSection"></section>
+
+    <script>
+        const triggerButton = document.getElementById('initTrigger')
+        const activitySection = document.getElementById('activitySection')
+
+        const NASAsection = document.getElementById('NASAimage')
+
+        const weatherSection = document.getElementById('weatherSection')
+        //const weatherAPIKey = 'dacbfe7a618c9100bcfdaa0d36efaa73'; 
+        //const location = 'Pasadena';
+
+        const boredAPIURL = "http://www.boredapi.com/api/activity?participants=1"
+
+        const nasaAPODurl = "https://api.nasa.gov/planetary/apod"
+        const nasaAPIkey = "api_key=DEMO_KEY"
+
+        //const weatherAPIKey = "01ecb9ce6d997a7e8cc413ad190176ad" // 1
+        const weatherAPIURL = "http://api.weatherstack.com/current?access_key=01ecb9ce6d997a7e8cc413ad190176ad&query=91101"
+
+        const fetchActivityData = () => {
+            fetch(boredAPIURL)
+                .then((response) =>  response.json() )
+                .then((payload) => appendActivityData(payload))
+                fetchWeatherData()
+        }
+
+        const appendActivityData = (data) => {
+            console.log(data)
+
+            const activity = data.activity
+            const type = data.type
+
+            const activityHeader = document.createElement('h3')
+            activityHeader.innerText = "Why not try: " + activity
+            activitySection.appendChild(activityHeader)
+
+            const activityType = document.createElement('p')
+            activityType.innerText = "Type of activity: " + type
+            activitySection.appendChild(activityType)
+
+            // Assuming the date 
+            const nasaDate = "2003-10-29"
+            fetchNASAData(nasaDate)
+        }
+
+        const fetchNASAData = (picDate) => {
+            const fetchURL = nasaAPODurl + "?" + nasaAPIkey + "&" + "date=" + picDate
+            fetch(fetchURL)
+                .then((payload) =>  payload.json() )
+                .then((json) => appendNASAData(json))
+        }
+
+        const appendNASAData = (data) => {
+            console.log(data)
+
+            const picTitle = data.title
+            const imgURL = data.url
+
+            const picHeader = document.createElement('h3')
+            picHeader.innerText = picTitle
+            NASAsection.appendChild(picHeader)
+
+            const nasaImg = document.createElement('img')
+            nasaImg.src = imgURL
+            nasaImg.alt = "the image of " + picTitle
+            NASAsection.appendChild(nasaImg)
+        }
+
+        const fetchWeatherData = () => { // 2
+            fetch(weatherAPIURL)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.success !== false) {
+                        const temperature = data.current.temperature;
+                        const weatherDesc = data.current.weather_descriptions[0];
+                        const weatherInfo = `<p>The current weather is ${weatherDesc} with a temperature of ${temperature}°C.</p>`;
+                        weatherSection.innerHTML = weatherInfo;
+                    } else {
+                        weatherSection.innerHTML = `<p>Failed to retrieve weather data. Please check your API key and the query.</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    weatherSection.innerHTML = `<p>An error occurred while fetching weather data.</p>`;
+                });
+        }
+
+        triggerButton.addEventListener("click", fetchActivityData)
+    </script>
+</body>
+</html>
