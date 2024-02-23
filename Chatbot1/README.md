@@ -57,3 +57,7 @@ client.run(my_secret)
 
   ```
 
+# Result
+The robot uses the sleeping emoji (😴) to indicate that it is sleepy, as well as the facepalm emoji (🤭) and the waving emoji (👋) to respond to messages mentioning it. And I added "Zzz..." at the end of all the robot's dialogue to represent its sleepy personality.
+
+![image](https://github.com/JUANMAOV82/ACCT4-APIproject/blob/main/assets/%E6%88%AA%E5%B1%8F2024-02-22%20%E4%B8%8B%E5%8D%886.25.41.png)
