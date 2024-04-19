@@ -61,3 +61,133 @@ client.run(my_secret)
 The robot uses the sleeping emoji (😴) to indicate that it is sleepy, as well as the facepalm emoji (🤭) and the waving emoji (👋) to respond to messages mentioning it. And I added "Zzz..." at the end of all the robot's dialogue to represent its sleepy personality.
 
 ![image](https://github.com/JUANMAOV82/ACCT4-APIproject/blob/main/assets/%E6%88%AA%E5%B1%8F2024-02-22%20%E4%B8%8B%E5%8D%886.25.41.png)
+
+
+# Chatbot (interact) PROJECT
+In the follow-up, I added a "wakeup service" to my chatbot, and only a certain option can wake it up.
+#code
+  ```py
+import discord
+from discord.ui import View, Button, Modal, TextInput
+import os
+
+
+class Node:
+
+  def __init__(self, value, answer="", children=[]):
+    self.value = value
+    self.answer = answer
+    self.children = children
+    #setup the Node
+
+
+
+node1 = Node('tired', answer='You good?')
+node2 = Node('good night', answer='Nothing')
+node3 = Node('Zzz....huh?', answer='Yes', children=[node1, node2])
+node4 = Node('Zzzzz...', answer='No')
+node5 = Node('Crab', answer="Maybe")
+root = Node('Zzzzzzz......me?', children=[node3, node4, node5])
+
+
+
+
+class GuessOptionView(View):
+
+  def __init__(self, node):
+    super().__init__()
+    for child in node.children:
+      self.add_item(GuessButton(child))
+    #setup the GuessOptionsView
+
+  async def handleButtonPress(self, interaction, node):
+    if (node.children == []):
+      await interaction.response.send_message(
+        content=f'Why did you wake me up?......{node.value}',
+        view=WrongView(node))
+    else:
+      await interaction.response.send_message(content=node.value,
+                                              view=GuessOptionView(node))
+    #what should happen when a button is pressed?
+
+
+
+
+
+class GuessButton(Button):
+
+  def __init__(self, node):
+    super().__init__(label=node.answer)
+    self.node = node
+    #setup the GuessButton
+
+  async def callback(self, interaction):
+    await self.view.handleButtonPress(interaction, self.node)
+    #what happens when this button is pressed
+
+
+
+
+class WrongView(View):
+
+  def __init__(self, node):
+    super().__init__()
+    self.node = node
+
+  @discord.ui.button(label="HEY!!!")
+  async def buttonCallback(self, interaction, button):
+    await interaction.response.send_modal(FeedbackModal(self.node))
+
+
+
+
+
+class FeedbackModal(Modal):
+
+  def __init__(self, node):
+    super().__init__(title="Feedback")
+    self.newAnimal = TextInput(label="What animal were you thinking of?")
+    self.newQuestion = TextInput(
+      label="A question to distinguish from the guess")
+    self.oldAnswer = TextInput(label="What answer get to the guess?")
+    self.newAnswer = TextInput(label="What answer get to your animal?")
+    self.add_item(self.newAnimal)
+    self.add_item(self.newQuestion)
+    self.add_item(self.oldAnswer)
+    self.add_item(self.newAnswer)
+    self.node = node
+
+
+
+async def on_submit(self, interaction):
+  newNode1 = Node(self.node.value, answer=self.oldAnswer.value)
+  newNode2 = Node(self.newAnimal.value, answer=self.newAnswer.value)
+  self.node.value = self.newQuestion.value
+  self.node.children = [newNode1, newNode2]
+  await interaction.response.send_message(
+    content='Thanks for updating......zzzZZZZZZZ {self.node.value}')
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
+
+@client.event
+async def on_ready():
+  print(f'We have logged in as {client.user}')
+
+
+@client.event
+async def on_message(message):
+  if message.author == client.user:
+    return
+
+  if message.content.startswith('$ARE YOU THERE?'):
+    await message.channel.send(content=root.value, view=GuessOptionView(root))
+
+
+token = os.getenv("DISCORD_BOT_SECRET")
+client.run(token)
+```
