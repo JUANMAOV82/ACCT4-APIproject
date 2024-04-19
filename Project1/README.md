@@ -9,3 +9,9 @@ The board api is the beginning of everything, triggered by a button. I first set
 # NASA API
 <img width="1009" alt="截屏2024-04-18 下午5 49 17" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/16c1e53d-a9c4-4f10-b5d6-01c49388b12e">
 The nasa api cooperates with the weather api. The nasa api obtains a picture through the date, and the weather api provides weather information to the user. In my imagination, after the user obtains an event, he can check whether today's weather information is in time for the event. You will also get a picture representing today's activities.
+<img width="687" alt="截屏2024-04-18 下午5 44 09" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/6ff23152-bb80-49ed-80e7-dc00ad4590d8">
+
+# WEARTHER API
+<img width="866" alt="截屏2024-04-18 下午6 02 40" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/e8aa1cd7-3096-4af2-bffb-c90f3bf53020">
+The weather api is a problematic part. When this api is referenced locally on my computer, everything can run normally; but after the code is uploaded to github, the location information cannot be referenced.
+<img width="779" alt="截屏2024-04-18 下午6 02 26" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/d8e2f3c1-8796-45cf-98f3-9a7888ddae4e">
