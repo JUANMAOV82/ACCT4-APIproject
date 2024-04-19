@@ -180,9 +180,14 @@ client.run(token)
 
 ```
 <img width="323" alt="截屏2024-04-18 下午8 07 14" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/38469ea2-aff4-40e7-a656-8918c9db7701">
+
 In the first part, you can wake up the bot by asking, and answer the bot's questions.
+
 <img width="442" alt="截屏2024-04-18 下午8 20 07" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/e4136607-c87a-4528-bf92-984cecf99c9d">
+
 If the wake-up fails, the bot will fall asleep again, but some notes can be left for it.
+
 <img width="434" alt="截屏2024-04-18 下午8 19 59" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/e7ae1c73-91fd-420f-915e-02427e79d6f1">
+
 
 
