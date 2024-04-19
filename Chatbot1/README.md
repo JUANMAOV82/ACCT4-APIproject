@@ -188,6 +188,8 @@ In the first part, you can wake up the bot by asking, and answer the bot's quest
 If the wake-up fails, the bot will fall asleep again, but some notes can be left for it.
 
 <img width="434" alt="截屏2024-04-18 下午8 19 59" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/e7ae1c73-91fd-420f-915e-02427e79d6f1">
+<img width="342" alt="截屏2024-04-18 下午8 22 13" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/84449319-eb6b-439b-a7bc-48b50a9b5e1f">
+After successfully waking up, the user can also leave a message to the bot, which will be recorded by the bot.
 
 
 
