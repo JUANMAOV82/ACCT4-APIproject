@@ -81,15 +81,12 @@ class Node:
     #setup the Node
 
 
-
 node1 = Node('tired', answer='You good?')
 node2 = Node('good night', answer='Nothing')
 node3 = Node('Zzz....huh?', answer='Yes', children=[node1, node2])
 node4 = Node('Zzzzz...', answer='No')
-node5 = Node('Crab', answer="Maybe")
+node5 = Node('just let me sleep.......zz', answer="Maybe")
 root = Node('Zzzzzzz......me?', children=[node3, node4, node5])
-
-
 
 
 class GuessOptionView(View):
@@ -111,9 +108,6 @@ class GuessOptionView(View):
     #what should happen when a button is pressed?
 
 
-
-
-
 class GuessButton(Button):
 
   def __init__(self, node):
@@ -124,8 +118,6 @@ class GuessButton(Button):
   async def callback(self, interaction):
     await self.view.handleButtonPress(interaction, self.node)
     #what happens when this button is pressed
-
-
 
 
 class WrongView(View):
@@ -139,24 +131,19 @@ class WrongView(View):
     await interaction.response.send_modal(FeedbackModal(self.node))
 
 
-
-
-
 class FeedbackModal(Modal):
 
   def __init__(self, node):
     super().__init__(title="Feedback")
-    self.newAnimal = TextInput(label="What animal were you thinking of?")
-    self.newQuestion = TextInput(
-      label="A question to distinguish from the guess")
+    self.newAnimal = TextInput(label="What were you thinking of?")
+    self.newQuestion = TextInput(label="Sleeping.... next time plz")
     self.oldAnswer = TextInput(label="What answer get to the guess?")
-    self.newAnswer = TextInput(label="What answer get to your animal?")
+    self.newAnswer = TextInput(label="Zzz?")
     self.add_item(self.newAnimal)
     self.add_item(self.newQuestion)
     self.add_item(self.oldAnswer)
     self.add_item(self.newAnswer)
     self.node = node
-
 
 
 async def on_submit(self, interaction):
@@ -190,4 +177,12 @@ async def on_message(message):
 
 token = os.getenv("DISCORD_BOT_SECRET")
 client.run(token)
+
 ```
+<img width="323" alt="截屏2024-04-18 下午8 07 14" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/38469ea2-aff4-40e7-a656-8918c9db7701">
+In the first part, you can wake up the bot by asking, and answer the bot's questions.
+<img width="442" alt="截屏2024-04-18 下午8 20 07" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/e4136607-c87a-4528-bf92-984cecf99c9d">
+If the wake-up fails, the bot will fall asleep again, but some notes can be left for it.
+<img width="434" alt="截屏2024-04-18 下午8 19 59" src="https://github.com/JUANMAOV82/ACCT4-APIproject/assets/113642935/e7ae1c73-91fd-420f-915e-02427e79d6f1">
+
+
